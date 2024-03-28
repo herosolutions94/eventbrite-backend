@@ -37,7 +37,8 @@ class User extends Authenticatable
         "user_image",
         "dob",
         "gender",
-        "total_credits"
+        "total_credits",
+        "user_cover"
     ];
 
     /**

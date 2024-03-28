@@ -15,6 +15,7 @@ class Payments_model extends Model
         'payment_method_id',
         'customer_id',
         'payment_intent_id',
+        'card_holder'
     ];
 
 

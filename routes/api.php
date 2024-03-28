@@ -38,6 +38,7 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/verify-code', [UserController::class, 'verifyCode']);
 Route::get('/countries', [CountryService::class, 'getAll']);
+Route::get('/states/{country_id}', [PagesController::class, 'get_country_states']);
 
 Route::post('/save-user-buy-credits', [UserController::class, 'saveUserBuyCredits']);
 
@@ -57,6 +58,7 @@ Route::post('/create-indent-payment', [PaymentController::class, 'createStripeIn
     Route::post('/teamsByUser', [TeamController::class, 'teamsByUser']);
     Route::post('/add-to-wishlist', [WishlistController::class, 'addToWishlist']);
     Route::post('/tournaments-create', [TournamentController::class, 'create'])->name('tournaments.create');
+    Route::post('/tournaments-update/{id}', [TournamentController::class, 'update_tournament'])->name('tournaments.update_tournament');
     Route::post('/tournamentsByUser', [TournamentController::class, 'tournamentsByUser']);
     Route::post('/create-team', [TeamController::class, 'create']);
 // });
@@ -64,6 +66,7 @@ Route::get('/teams', [TeamController::class, 'getAll']);
 Route::post('/accept_team/{id}', [TeamController::class, 'accept_team']);
 Route::post('/start-tournament/{id}', [TournamentController::class, 'start_tournament']);
 Route::post('/save-match-score/{id}', [TournamentController::class, 'save_match_score']);
+Route::post('/update-match-score/{id}', [TournamentController::class, 'update_match_score']);
 Route::post('/start-next-round/{id}', [TournamentController::class, 'start_next_round']);
 
 
@@ -76,6 +79,8 @@ Route::get('/bookings', [BookingController::class, 'getAll']);
 Route::post('/create-booking', [BookingController::class, 'bookingCreate']);
 Route::post('/reset-password', [BookingController::class, 'reset_password']);
 
+// public profile details
+Route::get('/public-profile/{id}', [ProfileController::class, 'public_profile']);
 // tournament details
 Route::get('/tournament-details/{id}', [TournamentController::class, 'tournamentDetail']);
 Route::get('/tournament-round-details/{id}/{round_id}', [TournamentController::class, 'tournamentRoundDetail']);
@@ -87,6 +92,7 @@ Route::get('/tournament-round-details/{id}/{round_id}', [TournamentController::c
 Route::post('/get-user-profile', [ProfileController::class, 'getUserProfile']);
 Route::post('/update-user-profile', [ProfileController::class, 'updateUserProfile']);
 Route::post('/upload-image', [ProfileController::class, 'upload_image']);
+Route::post('/upload-cover', [ProfileController::class, 'upload_cover']);
 // about us 
 Route::get('/privacy-policy', [PagesController::class, 'privacyPolicy']);
 Route::get('/home', [PagesController::class, 'home']);

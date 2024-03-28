@@ -15,6 +15,7 @@ class TournamentRounds extends Model
         'type',
         'round_no',
         'status',
+        "team_type"
     ];
 
     public function tournament()
@@ -22,6 +23,6 @@ class TournamentRounds extends Model
         return $this->belongsTo(Tournament::class);
     }
     public function matches(){
-        return $this->hasMany(TournamentMatches::class,'round_id','id');
+        return $this->hasMany(TournamentMatches::class,'round_id','id')->orderBy('id', 'asc');;
     }
 }

@@ -59,12 +59,32 @@ class Tournament extends Model
         "open_date",
         "is_started",
         "available_teams",
-        "match_type"
+        "match_type",
+        "winners_pool",
+        "eleminated_pool",
+        "looser_pool",
+        "pending_match_teams",
+        "sponsors",
+        "bank_information",
+        "tournament_logo",
+        "is_bracket_generated"
     ];
 
     public function images()
     {
         return $this->hasMany(TournamentImage::class);
+    }
+    public function logos()
+    {
+        return $this->hasMany(TournamentImage::class,'tournament_id','id')->where('caption','logo');
+    }
+    public function documents()
+    {
+        return $this->hasMany(TournamentImage::class,'tournament_id','id')->where('caption','document');
+    }
+    public function banners()
+    {
+        return $this->hasMany(TournamentImage::class,'tournament_id','id')->where('caption','banner');
     }
 
     public function tournamentCategories()
@@ -95,12 +115,25 @@ class Tournament extends Model
         return $this->hasMany(Review::class);
     }
     public function rounds(){
-        return $this->hasMany(TournamentRounds::class,'tournament_id','id');
+        return $this->hasMany(TournamentRounds::class,'tournament_id','id')->orderBy('id', 'asc');;
+    }
+    public function macthes_schedule(){
+        return $this->hasMany(Tournament_matches_schedule::class,'tournament_id','id')->orderBy('id', 'asc');;
+    }
+    public function descRounds(){
+        return $this->hasMany(TournamentRounds::class,'tournament_id','id')->orderBy('id', 'desc');;
     }
     public function inProgressRound()
     {
         return $this->hasOne(TournamentRounds::class, 'tournament_id', 'id')
                     ->where('status', 'in_progress')
+                    ->latest() // You might want to order by the latest round first
+                    ->limit(1);
+    }
+    public function firstRound()
+    {
+        return $this->hasOne(TournamentRounds::class, 'tournament_id', 'id')
+                    ->where('round_no', 1)
                     ->latest() // You might want to order by the latest round first
                     ->limit(1);
     }

@@ -12,6 +12,19 @@ use Illuminate\Support\Facades\Validator;
 
 class PagesController extends Controller
 {
+    public function get_country_states(Request $request,$country_id){
+        $res=array();
+        $res['status']=0;
+        if(!empty($country_id) && intval($country_id) > 0){
+            $states=DB::table('states')->where('country_id', $country_id)->get();
+            $res['states']=$states;
+            exit(json_encode($states));
+        }
+        else{
+            $res['msg']="Invalid country";
+        }
+        exit(json_encode($res));
+    }
     public function home(){
         $page = DB::table('home_cms')->first();
         return response()->json([
@@ -34,6 +47,9 @@ class PagesController extends Controller
             // 'trending_tournaments' => DB::table('tournaments')->where('is_active', '1')->orderBy('created_at', 'desc')->take(5)->get(),
     
         ], 200);
+    }
+    public function tournament_matches(){
+        
     }
     public function privacyPolicy()
     {

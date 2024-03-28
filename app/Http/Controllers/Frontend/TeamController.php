@@ -51,7 +51,7 @@ class TeamController extends Controller
                 'teams.*.role' => 'required|string',
                 'teams.*.emergency_name' => 'required|string',
                 'teams.*.emergency_phone' => 'required|string',
-                'waivers_email' => 'required|email',
+                // 'waivers_email' => 'required|email',
             ],[
                 'team_name.required' => 'The team name field is required.',
                 'skill.required' => 'The team skill field is required.',
@@ -64,7 +64,7 @@ class TeamController extends Controller
                 'teams.*.role.required' => 'The team member role field is required.',
                 'teams.*.emergency_name.required' => 'The team member emergency name field is required.',
                 'teams.*.emergency_phone.required' => 'The team member emergency phone field is required.',
-                'waivers_email.required' => 'The Waivers and Liability Forms email field is required.',
+                // 'waivers_email.required' => 'The Waivers and Liability Forms email field is required.',
             ]);
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], 422);

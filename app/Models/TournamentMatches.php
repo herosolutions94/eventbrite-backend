@@ -18,11 +18,12 @@ class TournamentMatches extends Model
         'team1_score',
         'team2_score',
         'status',
+        'next_match_id'
     ];
 
-    public function round()
+    public function round_row()
     {
-        return $this->hasMany(TournamentRounds::class,'round_id','id');
+        return $this->belongsTo(TournamentRounds::class,'round_id','id');
     }
     public function team_1()
     {

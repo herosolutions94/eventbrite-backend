@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Components\Services\AuthService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -15,6 +17,8 @@ class AuthController extends Controller
     }
     public function loginForm()
     {
+        // $password = Hash::make("admin@@");
+        // print_r($password);die;
         if (auth()->check()) {
             return $this->authService->redirectAdmin();
         }

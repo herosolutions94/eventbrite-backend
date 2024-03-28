@@ -16,6 +16,8 @@ class UserController extends Controller
     public function saveUserBuyCredits(Request $request)
     {
         $validator = Validator::make($request->all(), [
+                'credits' => 'required',
+                'card_holder'=>'required',
                 'amount' => 'required',
                 'payment_intent_id' => 'required',
                 'customer_id' => 'required',
@@ -23,13 +25,14 @@ class UserController extends Controller
                 'user_id' => 'required',
         ]);
          if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error' => $validator->errors()], 200);
         }
         else{
              $user = User::where('id', $request->user_id)->first();
              if(!empty($user)){
                  
-                $credits = floatval($request->amount) / 1.5; 
+                // $credits = floatval($request->amount) / 1.5; 
+                $credits = floatval($request->credits); 
                 $user->total_credits=number_format(floatval($user->total_credits) + floatval(number_format($credits, 2)),2);
                 $user->update();
                 Payments_model::create(array(
@@ -38,6 +41,7 @@ class UserController extends Controller
                    'payment_intent_id'=>$request->payment_intent_id,
                    'customer_id'=>$request->customer_id,
                    'payment_method_id'=>$request->payment_method_id,
+                   'card_holder'=>$request->card_holder,
                 ));
                  return response()->json([
                     'message' => 'Successfully purchased!',
