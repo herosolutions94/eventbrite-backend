@@ -7,8 +7,6 @@ use App\Models\Tournament;
 use Illuminate\Http\Request;
 use App\Models\Wishlist;
 
-
-
 class WishlistController extends Controller
 {
     public function getAll(Request $request)
