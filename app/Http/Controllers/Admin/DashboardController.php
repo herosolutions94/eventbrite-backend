@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
@@ -77,8 +79,35 @@ class DashboardController extends Controller
     {
         return view('admin.auth.verify_code');
     }
-    public function updatePassword()
+    public function updatePassword(Request $request)
     {
+        $input = $request->all();
+        if($input){
+            $admin=User::find(1);
+            $request_data = [
+                'current_password'     => 'required',
+                'new_password'     => 'required',
+                'confirm_password' => 'required|same:new_password',
+            ];
+            $validator = Validator::make($input, $request_data);
+            if ($validator->fails()) {
+                return redirect('admin/update_password')
+                ->with('error','Error >>'.$validator->errors()->first());
+            }
+            else{
+                if(Hash::check($input['current_password'],$admin->password)){
+                    $admin->password=Hash::make($input['new_password']);
+                    $admin->save();
+                    return redirect('admin/update_password')
+                    ->with('success','Updated Successfully');
+                }
+                else{
+                    return redirect('admin/update_password')
+                    ->with('error','Current Password is not right!');
+                } 
+            }
+            
+        }
         return view('admin.auth.change_password');
     }
 }

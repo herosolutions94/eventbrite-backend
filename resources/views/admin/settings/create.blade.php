@@ -20,7 +20,7 @@
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                             <!--begin::Item-->
                             <li class="breadcrumb-item text-muted">
-                                <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Dashboard</a>
+                                <a href="/admin/dashboard" class="text-muted text-hover-primary">Dashboard</a>
                             </li>
                             <!--end::Item-->
                             <!--begin::Item-->
@@ -54,6 +54,63 @@
                        
                         <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                             <!--begin::General options-->
+                            <div class="card card-flush py-4">
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2 class="required">Logo</h2>
+                                    </div>
+                                </div>
+                                <div class="card-body text-center pt-0">
+                                   
+                                    <style>
+                                        .image-input-placeholder {
+                                            background-image: url('assets/media/svg/files/blank-image.svg');
+                                        }
+    
+                                        [data-theme="dark"] .image-input-placeholder {
+                                            background-image: url('assets/media/svg/files/blank-image-dark.svg');
+                                        }
+                                    </style>
+                                
+                                    <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
+                                        data-kt-image-input="true" style="background-image: url('/storage/{{ $logo->value }}')">
+                                    <div class="image-input-wrapper w-150px h-150px" style="background-image: url('/storage/{{ $logo->value }}')">
+                                    </div>
+                             
+                                        <label
+                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                            data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                            title="Change Image">
+                                        
+                                            <i class="bi bi-pencil-fill fs-7"></i>
+                                            
+                                            <input type="file" name="logo" accept=".png, .jpg, .jpeg" />
+                                            <input type="hidden" name="avatar_remove" />
+                                            
+                                        </label>
+                                      
+                                        <span
+                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                            data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
+                                            title="Cancel avatar">
+                                            <i class="bi bi-x fs-2"></i>
+                                        </span>
+                                      
+                                        <span
+                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                            data-kt-image-input-action="remove" data-bs-toggle="tooltip"
+                                            title="Remove avatar">
+                                            <i class="bi bi-x fs-2"></i>
+                                        </span>
+                                       
+                                    </div>
+                               
+                                    <div class="text-muted fs-7">Set the category thumbnail image. Only *.png, *.jpg and
+                                        *.jpeg image files are accepted</div>
+                                 
+                                </div>
+                          
+                            </div>
                             <div class="card card-flush py-4">
                                 <!--begin::Card header-->
                                 <div class="card-header">
@@ -125,6 +182,7 @@
                             </div>
                         </div>
                         <!--end::Main column-->
+                        
                     </form>
                 </div>
                 <!--end::Content container-->

@@ -17,6 +17,7 @@ class AuthService
                     'email' => 'You are not authorized to access this page.',
                 ]);
             }else{
+                $request->session()->put('adminLoginId',$user->id);
                 return $this->redirectAdmin();
             }
         }

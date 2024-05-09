@@ -67,7 +67,11 @@ class Tournament extends Model
         "sponsors",
         "bank_information",
         "tournament_logo",
-        "is_bracket_generated"
+        "is_bracket_generated",
+        "location",
+        "lat",
+        "long",
+        "tournament_type"
     ];
 
     public function images()

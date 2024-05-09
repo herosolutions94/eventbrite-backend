@@ -14,11 +14,14 @@ class ProfileController extends Controller
     public function getUserProfile(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        if(empty($user->firstname) && empty($user->lastname)){
-            $nameArray = explode(" ", $user->name);
-            $user->firstname=$nameArray[0];
-            $user->lastname=count($nameArray) > 1 ? $nameArray[1] : "";
+        if(!empty($user)){
+            if(empty($user->firstname) && empty($user->lastname)){
+                $nameArray = explode(" ", $user->name);
+                $user->firstname=$nameArray[0];
+                $user->lastname=count($nameArray) > 1 ? $nameArray[1] : "";
+            }
         }
+        
         return response()->json(['data' => $user], 200);
     }
     public function public_profile(Request $request,$id){

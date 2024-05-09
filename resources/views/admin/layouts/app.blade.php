@@ -82,6 +82,40 @@
 <script src="{{ url('admin/assets/js/custom/apps/chat/chat.js') }}"></script>
 <script src="{{ url('admin/assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
 <script src="{{ url('admin/assets/js/custom/utilities/modals/users-search.js') }}"></script>
+<script>
+    $(document).on('change', '#country', function (e) {
+        let country_id = $(this).val();
+        let btn_label=$(".indicator-label");
+        let progress=$(".indicator-progress");
+        btn_label.parent().attr("disables",true);
+        btn_label.hide();
+        progress.show();
+        $.ajax({
+            url:  '/api/states/' + country_id,
+            dataType: 'JSON',
+            method: 'GET',
+            success: function (rs) {
+                let optionsHtml = '';
+                if (rs?.length > 0) {
+                    rs.forEach(function(state) {
+                        optionsHtml += `<option value="${state.id}">${state.name}</option>`;
+                    });
+                    $("#state").html(optionsHtml);
+                }
+    
+            },
+            error: function (rs) {
+                console.log(rs);
+            },
+            complete: function (rs) {
+                btn_label.parent().attr("disables",false);
+                btn_label.show();
+                progress.hide();
+                // console.log(rs);
+            }
+        })
+    })
+</script>
 </body>
 <!--end::Body-->
 

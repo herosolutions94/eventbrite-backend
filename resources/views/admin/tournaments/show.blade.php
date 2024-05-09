@@ -55,16 +55,26 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-wrap flex-center">
-                          
+                                        <!--begin::Stats-->
+                                        <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
+                                            <div class="fs-4 fw-bolder text-gray-700">
+                                                <span class="w-20px">
+                                                    {{ Carbon\Carbon::parse($tournament->open_date)->format('Y-m-d') }}
+                                                </span>
+                                                
+                                            </div>
+                                            <div class="fw-bold text-muted">Open Date</div>
+                                        </div>
                                         <div class="border border-gray-300 border-dashed rounded py-3 px-3 mx-4 mb-3">
                                             <div class="fs-4 fw-bolder text-gray-700">
                                            
                                                 {{ Carbon\Carbon::parse($tournament->registration_dead_line)->format('Y-m-d') }}
                                                
                                             </div>
-                                            <div class="fw-bold text-muted">Registration Deadline</div>
+                                            <div class="fw-bold text-muted">Deadline Date</div>
                                         </div>
                                     </div>
+                                    
                                     <!--end::Info-->
                                 </div>
                                 <!--end::Summary-->
@@ -92,30 +102,18 @@
                                         <div class="text-gray-600">
                                             {{ isset($tournament->category->name) ? $tournament->category->name : 'N/A' }}
                                         </div>
-                                    
-                                        <div class="fw-bolder mt-5">Type</div>
+                                        <div class="fw-bolder mt-5">Tournament Type</div>
                                         <div class="text-gray-600">
-                                            {{  isset($tournament->type->name) ? $tournament->type->name : 'N/A' }}
+                                            {{ isset($tournament->tournament_type) ? $tournament->tournament_type : 'N/A' }}
+                                        </div>
+                                        <div class="fw-bolder mt-5">Tournament Location</div>
+                                        <div class="text-gray-600">
+                                            {{ isset($tournament->location) ? $tournament->location : 'N/A' }}
                                         </div>
                                    
-                                        <div class="fw-bolder mt-5">Country</div>
-                                        <div class="text-gray-600">
-                                            {{ isset($tournament->country->name) ? $tournament->country->name : 'N/A' }}
-                                        </div>
-                                    
-                                        <div class="fw-bolder mt-5">City</div>
-                                        <div class="text-gray-600">
-                                            {{ isset($tournament->city) ? $tournament->city : 'N/A' }}
-                                        </div>
-                                       
-                                        <div class="fw-bolder mt-5">Postal Code</div>
-                                        <div class="text-gray-600">
-                                            {{ isset($tournament->postal_code) ? $tournament->postal_code : 'N/A' }}
-                                        </div>
-                                    
                                         <div class="fw-bolder mt-5">Address</div>
                                         <div class="text-gray-600">
-                                            {{ isset($tournament->address) ? $tournament->address : 'N/A' }}
+                                            {{ isset($tournament->address) ? $tournament->address : 'N/A' }}, {{ isset($tournament->city) ? $tournament->city : 'N/A' }} {{ isset($tournament->postal_code) ? $tournament->postal_code : 'N/A' }}, {{ isset($tournament->country->name) ? $tournament->country->name : 'N/A' }}
                                         </div>
                                     </div>
                                 </div>
@@ -126,43 +124,30 @@
                     <!--end::Sidebar-->
                     <!--begin::Content-->
                     <div class="flex-lg-row-fluid ms-lg-15">
-                        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-8">
-                            <!--begin:::Tab item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_customer_view_overview_tab">Overview</a>
-                            </li>
-                            <!--end:::Tab item-->
-                            <!--begin:::Tab item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_customer_view_overview_events_and_logs_tab">Match &amp; Details</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#teams">Teams</a>
-                            </li>
-                           
-                            <li class="nav-item ms-auto">
-                                <!--begin::Action menu-->
-                                <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Actions
-                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-                                <span class="svg-icon svg-icon-2 me-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="black" />
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon--></a>
-                                <!--begin::Menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold py-4 w-250px fs-6" data-kt-menu="true">
-                                    
-                                    <div class="menu-item px-5">
-                                        <p class="menu-link px-5">Edit Tournament</p>
-                                    </div>
-                                   
-                                </div>
-                                <!--end::Menu-->
-                                <!--end::Menu-->
-                            </li>
-                            <!--end:::Tab item-->
-                        </ul>
+                        <div class="row">
+                           <div class="col-md-8">
+                            <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-bold mb-8">
+                                <!--begin:::Tab item-->
+                                <li class="nav-item">
+                                    <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_customer_view_overview_tab">Overview</a>
+                                </li>
+                                <!--end:::Tab item-->
+                                <!--begin:::Tab item-->
+                                <li class="nav-item">
+                                    <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_customer_view_overview_events_and_logs_tab">Tournament Schedule</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#teams">Teams</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#matches">Matches Rounds</a>
+                                </li>
+                            </ul>
+                           </div>
+                            <div class="col-md-4">
+                                <a href="{{url('admin/tournaments/reset_tournament/'.$tournament->id)}}" class="btn btn-primary" onclick="return confirm('Are you sure? This action will reset your tournament and will shift the tournament to initial cleanup round.');">Reset Tournament Matches</a>
+                            </div>
+                        </div>
                
                         <!--end:::Tabs-->
                         <!--begin:::Tab content-->
@@ -175,7 +160,7 @@
                                     <div class="card-header border-0">
                                         <!--begin::Card title-->
                                         <div class="card-title">
-                                            <h2 class="fw-bolder mb-0">Event Details</h2>
+                                            <h2 class="fw-bolder mb-0">Tournament Details</h2>
                                         </div>
                                        
                                     </div>
@@ -198,7 +183,7 @@
                                                         <!--end::Svg Icon-->
                                                     </div>
                                              
-                                                    <img src="assets/media/svg/card-logos/mastercard.svg" class="w-40px me-3" alt="" />
+                                                   <h2 class="fw-bolder mb-0">General Details</h2>
                                             
                                                 </div>
                                           
@@ -212,66 +197,126 @@
                                                     <div class="flex-equal me-5">
                                                         <table class="table table-flush fw-bold gy-1 gx-1">
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Number of Teams:</td>
+                                                                <td class="text-muted">Match Type:</td>
+                                                                <td class="text-gray-800"> {{  isset($tournament->tournamenType->name) ? $tournament->tournamenType->name : 'N/A' }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Event Type:</td>
+                                                                <td class="text-gray-800">{{ $tournament->EventType ? $tournament->EventType->name : "N/A" }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="text-muted">Number of Teams:</td>
                                                                 <td class="text-gray-800">{{ $tournament->number_of_teams }}</td>
                                                             </tr>
+
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Format</td>
-                                                                <td class="text-gray-800">{{ $tournament->format }}</td>
+                                                                <td class="text-muted">Entry Fee:</td>
+                                                                <td class="text-gray-800">${{ $tournament->entry_fee }}</td>
                                                             </tr>
+                                                            
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Prize Distribution</td>
-                                                                <td class="text-gray-800">{{ $tournament->prize_distribution }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Level</td>
-                                                                <td class="text-gray-800">{{ $tournament->level }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Entry Fee</td>
-                                                                <td class="text-gray-800">{{ $tournament->entry_fee }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Rules</td>
-                                                                <td class="text-gray-800"><?=$tournament->rules;?></td>
+                                                                <td class="text-muted">Tournament Level:</td>
+                                                                <td class="text-gray-800">{{ $tournament->TournamentLevel ? $tournament->TournamentLevel->level : "N/A" }}</td>
                                                             </tr>
                                                         </table>
                                                     </div>
-                                                    <!--end::Col-->
+                                                    
+                                                </div>
+                                                <h2>Rules and Regulations</h2>
+                                                <div class="d-flex flex-wrap py-5">
                                                     <!--begin::Col-->
-                                                    <div class="flex-equal">
-                                                        <table class="table table-flush fw-bold gy-1">
-                                                           
+                                                    <div class="flex-equal me-5">
+                                                        <table class="table table-flush fw-bold gy-1 gx-1">
+                                                            @if(count($tournament->documents_arr) > 0)
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Age</td>
-                                                                <td class="text-gray-800">{{ $tournament->age }}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Equipment Requirmenets</td>
-                                                                <td class="text-gray-800">
-                                                                    <a href="#" class="text-gray-900 text-hover-primary">{{ $tournament->equipment_requirements }}</a>
+                                                                <td class="text-muted">Documents:</td>
+                                                                <td class="text-gray-800"> 
+                                                                    @foreach($tournament->documents_arr as $key => $document)
+                                                                        <a
+                                                                          href="{{ asset('storage/' . $document->image) }}" target="_blank"
+                                                                        >
+                                                                          Document {{$key+1}}
+                                                                        </a>
+                                                                    @endforeach
                                                                 </td>
                                                             </tr>
+                                                            @endif
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Contact Information</td>
-                                                                <td class="text-gray-800">
-                                                                    <a href="#" class="text-gray-900 text-hover-primary">{{ $tournament->contact_information }}</a>
+                                                                <td class="text-muted">Tournament Description :</td>
+                                                                <td class="text-gray-800">{{ $tournament->overview ? $tournament->overview : "N/A" }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="text-muted">Specific rules for the tournament:</td>
+                                                                <td class="text-gray-800">{{ $tournament->rules }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="text-muted">Code of Conduct:</td>
+                                                                <td class="text-gray-800">{{ $tournament->code_of_conduct }}</td>
+                                                            </tr>
+                                                            
+                                                            <tr>
+                                                                <td class="text-muted">Age or Skill Level Restrictions:</td>
+                                                                <td class="text-gray-800">{{ $tournament->age ? $tournament->age : "N/A" }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="text-muted">Equipment Requirements:</td>
+                                                                <td class="text-gray-800">{{ $tournament->equipment_requirements ? $tournament->equipment_requirements : "N/A" }}</td>
+                                                            </tr>
+                                                            @if(count($tournament->banner_arr) > 0)
+                                                            <tr>
+                                                                <td class="text-muted">Banners:</td>
+                                                                <td class="text-gray-800"> 
+                                                                    @foreach($tournament->banner_arr as $key => $banner)
+                                                                        <a
+                                                                          href="{{ asset('storage/' . $banner->image) }}" target="_blank"
+                                                                        >
+                                                                          <img src="{{ asset('storage/' . $banner->image) }}" alt="image" style="width:100px;object-fit:contain" />
+                                                                        </a>
+                                                                    @endforeach
                                                                 </td>
                                                             </tr>
+                                                            @endif
+                                                            @if(count($tournament->logos_arr) > 0)
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Roles and Responsiblities</td>
-                                                                <td class="text-gray-800">
-                                                                    <a href="#" class="text-gray-900 text-hover-primary">{{ $tournament->roles_and_responsibilities }}</a>
+                                                                <td class="text-muted">Logos:</td>
+                                                                <td class="text-gray-800"> 
+                                                                    @foreach($tournament->logos_arr as $key => $logos)
+                                                                        <a
+                                                                          href="{{ asset('storage/' . $logos->image) }}" target="_blank"
+                                                                        >
+                                                                          <img src="{{ asset('storage/' . $logos->image) }}" alt="image" style="width:100px;object-fit:contain" />
+                                                                        </a>
+                                                                    @endforeach
                                                                 </td>
                                                             </tr>
+                                                            @endif
+                                                            @if(count($tournament->staffArr) > 0)
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Code of conduct</td>
-                                                                <td class="text-gray-800"><?=$tournament->code_of_conduct?></td>
+                                                                <td class="text-muted">Tournament Staff & Volunteers:</td>
+                                                                <td class="text-gray-800"> 
+                                                                    <table class="table table-flush fw-bold gy-1">
+                                                                        <tr>
+                                                                            <th>Contact Information</th>
+                                                                            <th>Roles and Responsibilities</th>
+                                                                        </tr>
+                                                                        @foreach($tournament->staffArr as $key => $staff)
+                                                                            <tr>
+                                                                                <td>{{$staff->contact}}</td>
+                                                                                <td>{{$staff->responsibility}}</td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </table>
+                                                                    
+                                                                </td>
                                                             </tr>
-                                                           
+                                                            @endif
                                                         </table>
                                                     </div>
-                                                    <!--end::Col-->
+                                                    
                                                 </div>
                                                 <!--end::Details-->
                                             </div>
@@ -285,6 +330,7 @@
                             </div>
                             <div class="tab-pane fade" id="kt_customer_view_overview_events_and_logs_tab" role="tabpanel">
                                 <div class="card pt-4 mb-6 mb-xl-9 px-4">
+                                    @foreach($tournament->matches as $key =>$tournament_match)
                                     <div class="py-0" data-kt-customer-payment-method="row">
                                         <div class="py-3 d-flex flex-stack flex-wrap">
                                             <div class="d-flex align-items-center collapsible collapsed rotate" data-bs-toggle="collapse" href="#kt_customer_view_payment_method_2" role="button" aria-expanded="false" aria-controls="kt_customer_view_payment_method_2">
@@ -298,7 +344,7 @@
                                                 <img src="assets/media/svg/card-logos/visa.svg" class="w-40px me-3" alt="" />
                                                 <div class="me-3">
                                                     <div class="d-flex align-items-center">
-                                                        <div class="text-gray-800 fw-bolder">Match 01 Details</div>
+                                                        <div class="text-gray-800 fw-bolder">Match {{$key+1}}</div>
                                                     </div>
                                                 
                                                 </div>
@@ -313,12 +359,12 @@
                                                 <div class="flex-equal me-5">
                                                     <table class="table table-flush fw-bold gy-1">
                                                         <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Date</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->schedule_date) ? Carbon\Carbon::parse($tournament->schedule_date)->format('d M Y') : '' }}</td>
+                                                            <td class="text-muted">Schedule Date</td>
+                                                            <td class="text-gray-800">{{ isset($tournament_match->schedule_date) ? Carbon\Carbon::parse($tournament_match->schedule_date)->format('d M Y') : '' }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Time</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->schedule_time) ? Carbon\Carbon::parse($tournament->schedule_time)->format('h:i A') : '' }}</td>
+                                                            <td class="text-muted">Schedule Time</td>
+                                                            <td class="text-gray-800">{{ isset($tournament_match->schedule_time) ? Carbon\Carbon::parse($tournament_match->schedule_time)->format('h:i A') : '' }}</td>
                                                         </tr>
                                                     
                                                     </table>
@@ -327,12 +373,12 @@
                                                 <div class="flex-equal">
                                                     <table class="table table-flush fw-bold gy-1">
                                                         <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Breaks</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->schedule_breaks) ? $tournament->schedule_breaks: 'N/A'  }}</td>
+                                                            <td class="text-muted">Schedule Breaks</td>
+                                                            <td class="text-gray-800">{{ isset($tournament_match->schedule_breaks) ? $tournament_match->schedule_breaks: 'N/A'  }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Venue Availability</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->venue_availability) ? $tournament->venue_availability : '' }}</td>
+                                                            <td class="text-muted">Venue Availability</td>
+                                                            <td class="text-gray-800">{{ isset($tournament_match->venue_availability) ? $tournament_match->venue_availability : '' }}</td>
                                                         </tr>
                                                     
                                                     </table>
@@ -343,180 +389,7 @@
                                         </div>
                                         <!--end::Body-->
                                     </div>
-                                    <div class="py-0" data-kt-customer-payment-method="row">
-                                        <div class="py-3 d-flex flex-stack flex-wrap">
-                                            <div class="d-flex align-items-center collapsible collapsed rotate" data-bs-toggle="collapse" href="#kt_customer_view_payment_method_3" role="button" aria-expanded="false" aria-controls="kt_customer_view_payment_method_2">
-                                                <div class="me-3 rotate-90">
-                                                    <span class="svg-icon svg-icon-3">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                            <path d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z" fill="black" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                                <img src="assets/media/svg/card-logos/visa.svg" class="w-40px me-3" alt="" />
-                                                <div class="me-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="text-gray-800 fw-bolder">Match 02 Details</div>
-                                                    </div>
-                                                
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--end::Header-->
-                                        <!--begin::Body-->
-                                        <div id="kt_customer_view_payment_method_3" class="collapse fs-6 ps-10" data-bs-parent="#kt_customer_view_payment_method">
-                                            <!--begin::Details-->
-                                            <div class="d-flex flex-wrap py-5">
-                                                <!--begin::Col-->
-                                                <div class="flex-equal me-5">
-                                                    <table class="table table-flush fw-bold gy-1">
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Date</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->second_match_date) ? Carbon\Carbon::parse($tournament->second_match_date)->format('d M Y') : '' }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Time</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->second_match_time) ? Carbon\Carbon::parse($tournament->second_match_time)->format('h:i A') : '' }}</td>
-                                                        </tr>
-                                                    
-                                                    </table>
-                                                </div>
-                                            
-                                                <div class="flex-equal">
-                                                    <table class="table table-flush fw-bold gy-1">
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Breaks</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->second_match_breaks) ? $tournament->second_match_breaks: 'N/A'  }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Venue Availability</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->second_venue_availability) ? $tournament->second_venue_availability : '' }}</td>
-                                                        </tr>
-                                                    
-                                                    </table>
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Details-->
-                                        </div>
-                                        <!--end::Body-->
-                                    </div>
-                                    <div class="py-0" data-kt-customer-payment-method="row">
-                                        <div class="py-3 d-flex flex-stack flex-wrap">
-                                            <div class="d-flex align-items-center collapsible collapsed rotate" data-bs-toggle="collapse" href="#kt_customer_view_payment_method_4" role="button" aria-expanded="false" aria-controls="kt_customer_view_payment_method_2">
-                                                <div class="me-3 rotate-90">
-                                                    <span class="svg-icon svg-icon-3">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                            <path d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z" fill="black" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                                <img src="assets/media/svg/card-logos/visa.svg" class="w-40px me-3" alt="" />
-                                                <div class="me-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="text-gray-800 fw-bolder">Match 03 Details</div>
-                                                    </div>
-                                                
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--end::Header-->
-                                        <!--begin::Body-->
-                                        <div id="kt_customer_view_payment_method_4" class="collapse fs-6 ps-10" data-bs-parent="#kt_customer_view_payment_method">
-                                            <!--begin::Details-->
-                                            <div class="d-flex flex-wrap py-5">
-                                                <!--begin::Col-->
-                                                <div class="flex-equal me-5">
-                                                    <table class="table table-flush fw-bold gy-1">
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Date</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->third_match_date) ? Carbon\Carbon::parse($tournament->third_match_date)->format('d M Y') : '' }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Time</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->third_match_time) ? Carbon\Carbon::parse($tournament->third_match_time)->format('h:i A') : '' }}</td>
-                                                        </tr>
-                                                    
-                                                    </table>
-                                                </div>
-                                            
-                                                <div class="flex-equal">
-                                                    <table class="table table-flush fw-bold gy-1">
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Breaks</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->third_match_breaks) ? $tournament->third_match_breaks: 'N/A'  }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Venue Availability</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->third_venue_availability) ? $tournament->third_venue_availability : '' }}</td>
-                                                        </tr>
-                                                    
-                                                    </table>
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Details-->
-                                        </div>
-                                        <!--end::Body-->
-                                    </div>
-                                    <div class="py-0" data-kt-customer-payment-method="row">
-                                        <div class="py-3 d-flex flex-stack flex-wrap">
-                                            <div class="d-flex align-items-center collapsible collapsed rotate" data-bs-toggle="collapse" href="#kt_customer_view_payment_method_5" role="button" aria-expanded="false" aria-controls="kt_customer_view_payment_method_2">
-                                                <div class="me-3 rotate-90">
-                                                    <span class="svg-icon svg-icon-3">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                            <path d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z" fill="black" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                                <img src="assets/media/svg/card-logos/visa.svg" class="w-40px me-3" alt="" />
-                                                <div class="me-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="text-gray-800 fw-bolder">Match 04 Details</div>
-                                                    </div>
-                                                
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--end::Header-->
-                                        <!--begin::Body-->
-                                        <div id="kt_customer_view_payment_method_5" class="collapse fs-6 ps-10" data-bs-parent="#kt_customer_view_payment_method">
-                                            <!--begin::Details-->
-                                            <div class="d-flex flex-wrap py-5">
-                                                <!--begin::Col-->
-                                                <div class="flex-equal me-5">
-                                                    <table class="table table-flush fw-bold gy-1">
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Date</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->fourth_match_date) ? Carbon\Carbon::parse($tournament->fourth_match_date)->format('d M Y') : '' }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Time</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->fourth_match_time) ? Carbon\Carbon::parse($tournament->fourth_match_time)->format('h:i A') : '' }}</td>
-                                                        </tr>
-                                                    
-                                                    </table>
-                                                </div>
-                                            
-                                                <div class="flex-equal">
-                                                    <table class="table table-flush fw-bold gy-1">
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Schedule Breaks</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->fourth_match_breaks) ? $tournament->fourth_match_breaks: 'N/A'  }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Venue Availability</td>
-                                                            <td class="text-gray-800">{{ isset($tournament->fourth_venue_availability) ? $tournament->fourth_venue_availability : '' }}</td>
-                                                        </tr>
-                                                    
-                                                    </table>
-                                                </div>
-                                                <!--end::Col-->
-                                            </div>
-                                            <!--end::Details-->
-                                        </div>
-                                        <!--end::Body-->
-                                    </div>
+                                    @endforeach
                                 </div>  
                             </div>
 
@@ -582,19 +455,19 @@
                                                     <div class="flex-equal me-5">
                                                         <table class="table table-flush fw-bold gy-1">
                                                             <tbody><tr>
-                                                                <td class="text-muted min-w-125px w-125px">Team Color</td>
+                                                                <td class="text-muted">Team Color</td>
                                                                 <td class="text-gray-800"> {{ $team->team_color }}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Skill</td>
+                                                                <td class="text-muted">Skill</td>
                                                                 <td class="text-gray-800">{{ $team->skill }}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Waivers Email</td>
+                                                                <td class="text-muted">Waivers Email</td>
                                                                 <td class="text-gray-800">{{ $team->waivers_email }}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Waivers File</td>
+                                                                <td class="text-muted">Waivers File</td>
                                                                 <td class="text-gray-800">{{ $team->waivers_file }}</td>
                                                             </tr>
                                                             
@@ -606,15 +479,15 @@
                                                         <table class="table table-flush fw-bold gy-1">
                                                             <tbody>
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Captain Name</td>
+                                                                <td class="text-muted">Captain Name</td>
                                                                 <td class="text-gray-800">{{ $team->full_name }}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Captain Email</td>
+                                                                <td class="text-muted">Captain Email</td>
                                                                 <td class="text-gray-800">{{ $team->email }}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td class="text-muted min-w-125px w-125px">Captain Phone</td>
+                                                                <td class="text-muted">Captain Phone</td>
                                                                 <td class="text-gray-800">{{ $team->phone }}</td>
                                                             </tr>
                                                            
@@ -647,22 +520,22 @@
                                                            <td class="text-muted min-w-25px w-25px">
                                                                 {{ $key + 1 }}
                                                             </td>
-                                                           <td class="text-muted min-w-125px w-125px">
+                                                           <td class="text-muted">
                                                            
                                                             {{ isset($teamMember->mem_name) ? $teamMember->mem_name : 'N/A' }}
                                                            </td>
-                                                           <td class="text-muted min-w-125px w-125px">
+                                                           <td class="text-muted">
                                                             {{ isset($teamMember->mem_email) ? $teamMember->mem_email : 'N/A' }}
                                                             </td>
-                                                           <td class="text-muted min-w-125px w-125px">
+                                                           <td class="text-muted">
                                                             
                                                              {{ isset($teamMember->mem_phone) ? $teamMember->mem_phone : 'N/A' }}
                                                            </td>
-                                                            <td class="text-muted min-w-125px w-125px">
+                                                            <td class="text-muted">
                                                                 
                                                                 {{ isset($teamMember->emergency_name) ? $teamMember->emergency_name : 'N/A' }}
                                                             </td>
-                                                            <td class="text-muted min-w-125px w-125px">
+                                                            <td class="text-muted">
                                                                
                                                                 {{ isset($teamMember->emergency_phone) ? $teamMember->emergency_phone : 'N/A' }}
                                                             </td>
@@ -685,6 +558,64 @@
                                     </div>
                                     @endforeach
                                     <!--end::Card body-->
+                                </div>
+                                <!--end::Card--> 
+                            </div>
+                            <div class="tab-pane fade" id="matches" role="tabpanel">
+                            <!--begin::Card-->
+                                <div class="card pt-4 mb-6 mb-xl-9">
+                                    <!--begin::Card header-->
+                                    <div class="card-header border-0">
+                                        <!--begin::Card title-->
+                                        <div class="card-title">
+                                            <h2 class="fw-bolder mb-0">Intitial Cleanup Round</h2>
+                                        </div>
+                                        <!--end::Card title-->
+                                       
+                                    </div>
+                                    <!--end::Card header-->
+                                    @if($tournament->firstRound)
+                                    <div class="btn_blk text-right" style="padding: 0px 20px 20px;">
+                                            <a href="{{config('app.react_url').'tournament-detail/'.$tournament->id}}" class="btn btn-success" target="_blank">Live Bracket</a>
+                                       </div>
+                                    <section class="app_dashboard__Pn28K app_generate_detail__8182I app_round1_generate_detail__ahrp2">
+
+                                       <div class="app_contain__i3s1g">
+                                          <div class="app_main_round_outer__dUJyt">
+                                             <div class="app_lbl_round__O5oKL">Intitial Cleanup Round</div>
+                                             @foreach($tournament->firstRound->matches as $round_key=>$round_match)
+                                             <div class="app_blk__KFw8Q">
+                                                <div class="app_outer_team_main__r9hRQ">
+                                                   <div class="app_team_main__iSi7Y">
+                                                      <div class="app_data_logo__fAf6I"><img alt="{{$round_match->team1 > 0 ? $round_match->team_1->team_name : 'TBD'}}" src="{{ asset('storage/' . $round_match->team_1->logo) }}"></div>
+                                                      <div class="app_data_text__VcOOf">
+                                                         <h3>{{$round_match->team1 > 0 ? $round_match->team_1->team_name : 'TBD'}}</h3>
+                                                      </div>
+                                                   </div>
+                                                   <div class="app_icon_vs__vp1h7"><img alt="vs" loading="lazy" width="200" height="200" decoding="async" data-nimg="1" src="{{url('admin/assets/media/vs.svg')}}" style="color: transparent;"></div>
+                                                   <div class="app_team_main__iSi7Y">
+                                                      <div class="app_data_logo__fAf6I"><img alt="{{$round_match->team2 > 0 ? $round_match->team_2->team_name : 'TBD'}}" src="{{ asset('storage/' . $round_match->team_2->logo) }}"></div>
+                                                      <div class="app_data_text__VcOOf">
+                                                         <h3>{{$round_match->team2 > 0 ? $round_match->team_2->team_name : 'TBD'}}</h3>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="app_select_winner__lvOH7">
+                                                   <div class="app_match_type__OAndc"><span>Match {{$round_key+1}}</span></div>
+                                                   <div class="app_inner_select__Q1YNc">
+                                                      <p>winner Team</p>
+                                                      <div class="input">{{$round_match->winner_row  ? $round_match->winner_row->team_name : 'TBD'}}</div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             @endforeach
+                                          </div>
+                                       </div>
+
+                                    </section>
+                                    @else
+                                        <div class="alert alert-danger">Tournament bracket will be generated after initial cleanup round.</div>
+                                    @endif
                                 </div>
                                 <!--end::Card--> 
                             </div>

@@ -17,6 +17,10 @@ class Payments_model extends Model
         'payment_intent_id',
         'card_holder'
     ];
+    public function user_row()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 
 
 }

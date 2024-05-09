@@ -8,19 +8,19 @@
                 <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                     <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                         <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                            Customers</h1>
+                            {{$title}}</h1>
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                             <li class="breadcrumb-item text-muted">
-                                <a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Home</a>
+                                <a href="/admin/dashboard" class="text-muted text-hover-primary">Home</a>
                             </li>
                             <li class="breadcrumb-item">
                                 <span class="bullet bg-gray-400 w-5px h-2px"></span>
                             </li>
-                            <li class="breadcrumb-item text-muted">Customers</li>
+                            <li class="breadcrumb-item text-muted">{{$title}}</li>
                             <li class="breadcrumb-item">
                                 <span class="bullet bg-gray-400 w-5px h-2px"></span>
                             </li>
-                            <li class="breadcrumb-item text-muted">All Customers</li>
+                            <li class="breadcrumb-item text-muted">All {{$title}}</li>
                         </ul>
                     </div>
                 </div>
@@ -71,10 +71,16 @@
                                                 <div class="d-flex">
                                               
                                                     <div class="ms-5">
-                                                        
-                                                        <a href="#"
+                                                        @if($role=='player')
+                                                         <a href="{{ route('admin.players.view', $user->id) }}"
                                                             class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1"
                                                             data-kt-ecommerce-category-filter="category_name">{{ $user->name }}</a>
+                                                        @else
+                                                            <a href="{{ route('admin.organizers.view', $user->id) }}"
+                                                            class="text-gray-800 text-hover-primary fs-5 fw-bold mb-1"
+                                                            data-kt-ecommerce-category-filter="category_name">{{ $user->name }}</a>
+                                                        @endif
+                                                        
                                                         <p>{{ $user->verify_token }}</p>
                                                     
                                     
@@ -119,18 +125,24 @@
                                                     data-kt-menu="true">
                                            
                                                     <div class="menu-item px-3">
-                                                         <a href="{{ route('admin.users.edit', $user->id) }}"
-                                                            class="menu-link px-3">Edit</a> 
-                                                       {{-- <p class="menu-link px-3">Edit</p> --}}
+                                                        @if($role=='player')
+                                                         <a href="{{ route('admin.players.view', $user->id) }}"
+                                                            class="menu-link px-3">View</a> 
+                                                        <a href="{{ route('admin.players.edit', $user->id) }}"
+                                                                class="menu-link px-3">Edit</a> 
+                                                        @else
+                                                            <a href="{{ route('admin.organizers.view', $user->id) }}"
+                                                            class="menu-link px-3">View</a> 
+                                                            <a href="{{ route('admin.organizers.edit', $user->id) }}"
+                                                                class="menu-link px-3">Edit</a> 
+                                                        @endif
                                                     </div>
                                             
                                                     <div class="menu-item px-3">
                                                          <a href="javascript::" onclick="deleteRecord('{{ route('admin.users.destroy', $user->id) }}')"
                                                             class="menu-link px-3"
                                                             data-kt-ecommerce-category-filter="delete_row">Delete</a>
-                                                        {{--<a href="javascript::"
-                                                            class="menu-link px-3"
-                                                            data-kt-ecommerce-category-filter="delete_row">Delete</a> --}}
+                                                        
                                                     </div>
 
                                                 </div>

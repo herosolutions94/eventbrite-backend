@@ -62,6 +62,8 @@ class TournamentController extends Controller
         ->where('is_active', 1)
         ->where('id', $request->id)
         ->first()){
+
+            // print_r($tournament->tournament_type);die;
             $tournament->second_match_breaks_val=$tournament->second_match_breaks;
             $tournament->schedule_date=!empty($tournament->schedule_date) ? date('Y-m-d',strtotime($tournament->schedule_date)) : "";
             $tournament->second_match_date=!empty($tournament->second_match_date) ? date('Y-m-d',strtotime($tournament->second_match_date)) : "";
@@ -479,9 +481,10 @@ class TournamentController extends Controller
                                 else{
                                     $team_a->resultText=null;
                                 }
+                                $team_a->score=$match->team1_score;
                                 $team_a->isWinner=$match->team1==$match->winner ? true : false;
                                 $team_a->status=$match->status==1 ? "PLAYED" : null;
-                                $team_a->name=$match->team_1->team_name;
+                                $team_a->name=$match->team_1->team_name." (".$match->team1_score.")";;
                                 $team_a->picture=url('/storage/'.$match->team_1->logo); 
                             }
                             else{
@@ -507,7 +510,7 @@ class TournamentController extends Controller
                                 
                                 $team_b->isWinner=$match->team2==$match->winner ? true : false;
                                 $team_b->status=$match->status==1 ? "PLAYED" : null;
-                                $team_b->name=$match->team_2->team_name;
+                                $team_b->name=$match->team_2->team_name." (".$match->team2_score.")";
                                 $team_b->picture=url('/storage/'.$match->team_2->logo);
                                  
                             }
@@ -541,7 +544,7 @@ class TournamentController extends Controller
                 }
                 
             }
-
+            $tournament->tournament_type_val=$tournament->tournament_type;
             return response()->json([
                 'data' => $tournament,
                 'teamsCount' => $teamsCount,
@@ -1607,6 +1610,8 @@ class TournamentController extends Controller
                 $data['tournament_logo']=$tournament_logo;
         }
         $data['updated_at']=date('Y-m-d H:i:s');
+        $data['lat']=json_decode($data['lat']);
+        $data['long']=json_decode($data['long']);
         // print_r($data);die;
         $tournament = Tournament::create($data);
         
@@ -1703,6 +1708,9 @@ class TournamentController extends Controller
                     $tournament_logo = $tournament_logo->store('uploads', 'public');
                     $data['tournament_logo']=$tournament_logo;
                 }
+                $data['lat']=json_decode($data['lat']);
+                $data['long']=json_decode($data['long']);
+                // print_r($data);die;
                 $tournament->update($data);
                 // print_r($tournament);die;
                 if ($request->hasFile('logos')) {
