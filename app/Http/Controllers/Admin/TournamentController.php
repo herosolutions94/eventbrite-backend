@@ -26,6 +26,18 @@ class TournamentController extends Controller
                 'data' => $tournament,
             ]);
     }
+    public function team_delete($t_id,$id){
+        if($tournament = Tournament::findOrFail($t_id)){
+            if($tournament->is_started!=1){
+                if($team=Team::where('id', $id)->get()->first()){
+                    $team->teamMembers()->delete();
+                    Team::where('id', $id)->where('tournament_id',$tournament->id)->delete();
+                    return redirect()->route('admin.tournaments.show',$t_id)->with('success', 'Team deleted successfully');
+                }
+            }
+            
+        }
+    }
     public function show($id)
     {
         $tournament = Tournament::with(
@@ -127,11 +139,11 @@ class TournamentController extends Controller
     }
     public function reset_tournament(Request $request,$id){
         if(!empty($id) && $tournament=Tournament::where('id', $id)->get()->first()){
-            // $rounds=TournamentRounds::where(['tournament_id'=>$tournament->id])->get();
-            // foreach($rounds as $round){
-            //     TournamentMatches::where('round_id', $round->id)->delete();
-            // }
-            // TournamentRounds::where(['tournament_id'=>$tournament->id])->delete();
+            $rounds=TournamentRounds::where(['tournament_id'=>$tournament->id])->get();
+            foreach($rounds as $round){
+                TournamentMatches::where('round_id', $round->id)->delete();
+            }
+            TournamentRounds::where(['tournament_id'=>$tournament->id])->delete();
             $tournamant_teams_count=Team::where('status', 'accepted')->where('tournament_id',$tournament->id)->count();
             if($tournamant_teams_count > 0){
                 $total_number_matches=$this->findClosestNumber($tournamant_teams_count);
@@ -146,7 +158,7 @@ class TournamentController extends Controller
         }
     }
     public function generateTournamentMatches($tournament_id){
-        if(!empty($tournament_id) && $tournament=Tournament::where('id', $tournament_id)->where('is_started',0)->get()->first()){
+        if(!empty($tournament_id) && $tournament=Tournament::where('id', $tournament_id)->where('is_started',1)->get()->first()){
             $tournamentTeams = Team::where('tournament_id', $tournament->id)->where('status', 'accepted')->pluck('id')->toArray();
             if(count($tournamentTeams) > 0){
                 $total_rounds=$this->calculateRounds(count($tournamentTeams));
@@ -171,6 +183,7 @@ class TournamentController extends Controller
 
                             $chosenNumbers = [];
                             $remainingTeams = $teamIds;
+                            
                             $chosen_matches=array();
                             for($i=1;$i<=$total_number_matches;$i++){
                                 $result1 = $this->chooseTwoRandomNumbers($remainingTeams, $chosenNumbers);
@@ -186,7 +199,6 @@ class TournamentController extends Controller
                                 ));
                                 
                             }
-
                             $tournament->available_teams=implode(",", $remainingTeams);
                             $tournament->pending_match_teams=implode(",", $remainingTeams);
                             $tournament->update(); 
@@ -201,8 +213,7 @@ class TournamentController extends Controller
                         
                         if($isRoundCreated<=0){
 
-
-                            $tournament_available_teams_req=Tournament::where('id', $tournament_id)->where('is_started',0)->pluck('available_teams')->toArray();
+                            $tournament_available_teams_req=Tournament::where('id', $tournament->id)->where('is_started',1)->pluck('available_teams')->toArray();
                             $tournament_available_teams=$tournament_available_teams_req[0];
                             $teamIds=[];
                             if(!empty($tournament_available_teams)){

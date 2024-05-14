@@ -274,6 +274,28 @@
                                 <!--end::Card header-->
                             </div>
                             <!--end::General options-->
+                            <div class="card card-flush py-4">
+                                <!--begin::Card header-->
+                                <div class="card-header">
+                                    <div class="card-title">
+                                        <h2>Credits information</h2>
+                                    </div>
+                                </div>
+                                <!--end::Card header-->
+                                <!--begin::Card body-->
+                                <div class="card-body pt-0">
+                                    <div class="mb-10 fv-row">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="required form-label" for="total_credits">Credits</label>
+                                                <input type="number" name="total_credits" class="form-control mb-2" placeholder="" value="{{$user->total_credits}}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <!--end::Card header-->
+                            </div>
                             <!--begin::Meta options-->
                             <div class="card card-flush py-4">
                                 <!--begin::Card header-->
@@ -322,6 +344,7 @@
                                 </div>
                                 <!--end::Card header-->
                             </div>
+
                             <!--end::Meta options-->
                             <div class="card card-flush py-4">
                                 <!--begin::Card header-->

@@ -84,6 +84,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::get('reset_tournament/{id}', [TournamentController::class, 'reset_tournament'])->name('reset_tournament');
             Route::post('store', [TournamentController::class, 'store'])->name('store'); 
             Route::get('edit/{id}', [TournamentController::class, 'edit'])->name('edit');
+            Route::get('team_delete/{t_id}/{id}', [TournamentController::class, 'team_delete'])->name('team_delete');
             Route::post('update/{id}', [TournamentController::class, 'update'])->name('update');
             Route::get('delete/{id}', [TournamentController::class, 'destroy'])->name('destroy');
             Route::get('activate/{id}', [TournamentController::class, 'activate'])->name('activate');
@@ -134,6 +135,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         });
         Route::group(['prefix' => 'transactions', 'as' => 'transactions.'], function () {
             Route::get('index', [TransactionsController::class, 'index'])->name('index'); 
+            Route::get('export', [TransactionsController::class, 'export'])->name('export'); 
             Route::get('delete/{id}', [TransactionsController::class, 'delete'])->name('destroy');
         });
 

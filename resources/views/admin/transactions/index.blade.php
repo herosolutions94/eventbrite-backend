@@ -42,8 +42,14 @@
                             </div>
                         </div> 
                         @endif
+                        <div class="card-header">
+                            <div class="card-title"></div>
+                            <div class="card-toolbar text-right">
+                                <a href="{{ route('admin.transactions.export') }}" class="btn btn-primary">Export CSV</a>
+                            </div>
+                        </div>
                         <div class="card-body pt-0">
-                   
+                            
                             <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_category_table">
                            
                                 <thead>
@@ -51,7 +57,7 @@
                                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                         <th class="min-w-250px">Name</th>
                                         <th class="min-w-150px">Amount</th>
-                                        <th class="min-w-150px">Mobile Number</th>
+                                        <th class="min-w-150px">Created At</th>
                                        
                                         <th class="text-end min-w-70px">Actions</th>
                                     </tr>

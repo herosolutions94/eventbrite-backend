@@ -435,9 +435,16 @@
                                                         </div>
                                                         <div class="text-muted">Created At: {{ $team->created_at }}</div>
                                                     </div>
+                                                    
                                                 </div>
                                         
                                                 <div class="d-flex my-3 ms-9">
+                                                    @if($tournament->is_started!=1)
+                                                    <div class="me-3">
+                                                        <a href="{{ route('admin.tournaments.team_delete', ['t_id' => $tournament->id, 'id' => $team->id]) }}" class="btn btn-danger">Delete</a>
+
+                                                    </div>
+                                                    @endif
                                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold w-150px py-3" data-kt-menu="true">
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3" data-kt-payment-mehtod-action="set_as_primary">Set as Primary</a>
