@@ -21,7 +21,7 @@
                                     <!--begin::Avatar-->
                                     <div class="symbol symbol-100px symbol-circle mb-7">
                                         @if(isset($tournament->images[0]->image))
-                                        <img src="{{ asset('storage/' . $tournament->images[0]->image) }}" alt="image" />
+                                        <img src="{{ get_site_image_src('',$tournament->images[0]->image) }}" alt="image" />
                                         @else
                                         <img src="https://via.placeholder.com/150" alt="image" />
                                         @endif
@@ -234,7 +234,7 @@
                                                                 <td class="text-gray-800"> 
                                                                     @foreach($tournament->documents_arr as $key => $document)
                                                                         <a
-                                                                          href="{{ asset('storage/' . $document->image) }}" target="_blank"
+                                                                          href="{{ get_site_image_src('',$document->image) }}" target="_blank"
                                                                         >
                                                                           Document {{$key+1}}
                                                                         </a>
@@ -272,9 +272,9 @@
                                                                 <td class="text-gray-800"> 
                                                                     @foreach($tournament->banner_arr as $key => $banner)
                                                                         <a
-                                                                          href="{{ asset('storage/' . $banner->image) }}" target="_blank"
+                                                                          href="{{ get_site_image_src('',$banner->image) }}" target="_blank"
                                                                         >
-                                                                          <img src="{{ asset('storage/' . $banner->image) }}" alt="image" style="width:100px;object-fit:contain" />
+                                                                          <img src="{{ get_site_image_src('',$banner->image) }}" alt="image" style="width:100px;object-fit:contain" />
                                                                         </a>
                                                                     @endforeach
                                                                 </td>
@@ -286,9 +286,9 @@
                                                                 <td class="text-gray-800"> 
                                                                     @foreach($tournament->logos_arr as $key => $logos)
                                                                         <a
-                                                                          href="{{ asset('storage/' . $logos->image) }}" target="_blank"
+                                                                          href="{{ get_site_image_src('',$logos->image) }}" target="_blank"
                                                                         >
-                                                                          <img src="{{ asset('storage/' . $logos->image) }}" alt="image" style="width:100px;object-fit:contain" />
+                                                                          <img src="{{ get_site_image_src('',$logos->image) }}" alt="image" style="width:100px;object-fit:contain" />
                                                                         </a>
                                                                     @endforeach
                                                                 </td>
@@ -423,7 +423,7 @@
                                                     </div>
                                         
                                                    @if($team->logo)
-                                                        <img src="{{ asset('storage/uploads/' . $team->logo) }}" class="w-40px me-3" alt="" />
+                                                        <img src="{{ get_site_image_src('',$team->logo) }}" class="w-40px me-3" alt="" />
                                                     @else
                                                         <img src="{{ asset('storage/uploads/default.png') }}" class="w-40px me-3" alt="" />
                                                     @endif
@@ -594,14 +594,14 @@
                                              <div class="app_blk__KFw8Q">
                                                 <div class="app_outer_team_main__r9hRQ">
                                                    <div class="app_team_main__iSi7Y">
-                                                      <div class="app_data_logo__fAf6I"><img alt="{{$round_match->team1 > 0 ? $round_match->team_1->team_name : 'TBD'}}" src="{{ asset('storage/' . $round_match->team_1->logo) }}"></div>
+                                                      <div class="app_data_logo__fAf6I"><img alt="{{$round_match->team1 > 0 ? $round_match->team_1->team_name : 'TBD'}}" src="{{ get_site_image_src('',$round_match->team_1->logo) }}"></div>
                                                       <div class="app_data_text__VcOOf">
                                                          <h3>{{$round_match->team1 > 0 ? $round_match->team_1->team_name : 'TBD'}}</h3>
                                                       </div>
                                                    </div>
                                                    <div class="app_icon_vs__vp1h7"><img alt="vs" loading="lazy" width="200" height="200" decoding="async" data-nimg="1" src="{{url('admin/assets/media/vs.svg')}}" style="color: transparent;"></div>
                                                    <div class="app_team_main__iSi7Y">
-                                                      <div class="app_data_logo__fAf6I"><img alt="{{$round_match->team2 > 0 ? $round_match->team_2->team_name : 'TBD'}}" src="{{ asset('storage/' . $round_match->team_2->logo) }}"></div>
+                                                      <div class="app_data_logo__fAf6I"><img alt="{{$round_match->team2 > 0 ? $round_match->team_2->team_name : 'TBD'}}" src="{{ get_site_image_src('',$round_match->team_2->logo) }}"></div>
                                                       <div class="app_data_text__VcOOf">
                                                          <h3>{{$round_match->team2 > 0 ? $round_match->team_2->team_name : 'TBD'}}</h3>
                                                       </div>

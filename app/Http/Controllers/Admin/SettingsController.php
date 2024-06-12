@@ -24,7 +24,7 @@ class SettingsController extends Controller
         $social_facebook = $settings->where('key', 'social_facebook')->first();
         $tournament_fee = $settings->where('key', 'tournament_fee')->first();
         $logo = $settings->where('key', 'logo')->first();
-
+        // dd(env('DB_DATABASE'));
 
         return view('admin.settings.create',
             [

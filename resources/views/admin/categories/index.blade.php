@@ -84,7 +84,7 @@
                                                     <!--begin::Thumbnail-->
                                                     <a href="#" class="symbol symbol-50px">
                                                         <span class="symbol-label"
-                                                            style="background-image:url({{ $category->image }});"></span>
+                                                            style="background-image:url({{ get_site_image_src('',$category->image) }});"></span>
                                                     </a>
                                                     <!--end::Thumbnail-->
                                                     <div class="ms-5">

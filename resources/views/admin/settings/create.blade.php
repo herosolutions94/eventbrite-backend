@@ -74,7 +74,7 @@
                                 
                                     <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
                                         data-kt-image-input="true" style="background-image: url('/storage/{{ $logo->value }}')">
-                                    <div class="image-input-wrapper w-150px h-150px" style="background-image: url('/storage/{{ $logo->value }}')">
+                                    <div class="image-input-wrapper w-150px h-150px" style="background-image: url('{{ get_site_image_src("",$logo->value) }}')">
                                     </div>
                              
                                         <label

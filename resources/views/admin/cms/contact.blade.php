@@ -59,7 +59,7 @@
                                 
                                     <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
                                         data-kt-image-input="true">
-                                    <div class="image-input-wrapper w-150px h-150px" style="background-image: url('/storage/{{ $contact->image }}')">
+                                    <div class="image-input-wrapper w-150px h-150px" style="background-image: url('{{ get_site_image_src('',$contact->image) }}')">
                                     </div>
                              
                                         <label

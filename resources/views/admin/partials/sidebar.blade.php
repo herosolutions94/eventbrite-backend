@@ -3,9 +3,9 @@
     data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
         <a href="/admin/dashboard">
-            <img alt="Logo" src="/storage/{{ $site_settings['logo']->value }}"
+            <img alt="Logo" src="{{ get_site_image_src('',$site_settings['logo']->value) }}"
                 class="h-25px app-sidebar-logo-default" />
-            <img alt="Logo" src="/storage/{{ $site_settings['logo']->value }}"
+            <img alt="Logo" src="{{ get_site_image_src('',$site_settings['logo']->value) }}"
                 class="h-20px app-sidebar-logo-minimize" />
         </a>
         <div id="kt_app_sidebar_toggle"

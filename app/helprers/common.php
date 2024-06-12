@@ -6,7 +6,8 @@ function pr($data){
 }
 function get_site_image_src($path, $image, $type = '', $user_image = false)
 {
-    $filepath = Storage::url($path.'/'.$type.$image);
+    $filepath = Storage::url($path.$type.$image);
+    $filepath=config('app.url').$filepath;
     if (!empty($image) && @file_exists(".".Storage::url($path.'/'.$type.$image))) {
     // if (!empty($image) && @getimagesize($filepath)) {
         return url($filepath);
