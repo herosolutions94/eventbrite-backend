@@ -4,7 +4,7 @@
     'name' => 'eventbrite',
     'env' => 'local',
     'debug' => true,
-    'url' => 'https://staging.rentaro.com.au/eventbrite-backend/public',
+    'url' => 'http://127.0.0.1:8000/',
     'asset_url' => NULL,
     'timezone' => 'UTC',
     'locale' => 'en',
@@ -376,7 +376,7 @@
       array (
         'driver' => 'local',
         'root' => '/var/www/html/eventbrite-backend/storage/app/public',
-        'url' => 'https://staging.rentaro.com.au/eventbrite-backend/public/storage',
+        'url' => 'http://127.0.0.1:8000//storage',
         'visibility' => 'public',
         'throw' => false,
       ),
