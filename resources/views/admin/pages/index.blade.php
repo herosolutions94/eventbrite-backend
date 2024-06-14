@@ -112,7 +112,7 @@
                                             <td>
                                                 <div class="d-flex">
                                                     <div class="ms-5">
-                                                        <img src="{{ asset('storage/' . $data->image) }}"
+                                                        <img src="{{!empty($data->image) ?  get_site_image_src('',$data->image) : "" }}"
                                                             class="w-75px rounded" alt="image">
                                                        
                                                     </div>

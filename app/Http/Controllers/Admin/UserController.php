@@ -95,11 +95,20 @@ class UserController extends Controller
        if($user = User::with('countryName')->find($id)){
             $userData  =  $request->except(['_token']);
             if ($request->hasFile('user_image')) {
-                $user_image = $request->file('user_image')->store('uploads', 'public');
+                // $user_image = $request->file('user_image')->store('uploads', 'public');
+                // $userData['user_image'] = basename($user_image);
+
+                $user_imageName = "image_" . time() . '_' . uniqid() . '.' . $request->user_image->extension();  
+                $user_image = $request->user_image->move(public_path('uploads'), $user_imageName);
                 $userData['user_image'] = basename($user_image);
+
             }
             if ($request->hasFile('user_cover')) {
-                $user_cover = $request->file('user_cover')->store('uploads', 'public');
+                // $user_cover = $request->file('user_cover')->store('uploads', 'public');
+                // $userData['user_cover'] = basename($user_cover);
+
+                $imageName = "image_" . time() . '_' . uniqid() . '.' . $request->user_cover->extension();  
+                $user_cover = $request->user_cover->move(public_path('uploads'), $imageName);
                 $userData['user_cover'] = basename($user_cover);
             }
             // pr($userData);

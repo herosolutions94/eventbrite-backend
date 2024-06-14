@@ -26,7 +26,10 @@ class PageService
         $page->slug = $request->slug;
         $page->content = $request->content;
         if ($request->hasFile('avatar')) {
-            $page->image = $request->file('avatar')->store('uploads', 'public');
+            // $page->image = $request->file('avatar')->store('uploads', 'public');
+            $imageName = "image_" . time() . '_' . uniqid() . '.' . $request->avatar->extension();  
+            $avatar = $request->avatar->move(public_path('uploads'), $imageName);
+            $page->image = basename($avatar);
         }
         $page->is_active = $request->is_active ? true : false;
         $page->meta_title = $request->meta_title;
@@ -42,7 +45,10 @@ class PageService
         $page->slug = $request->slug;
         $page->content = $request->content;
         if ($request->hasFile('avatar')) {
-            $page->image = $request->file('avatar')->store('uploads', 'public');
+            // $page->image = $request->file('avatar')->store('uploads', 'public');
+            $imageName = "image_" . time() . '_' . uniqid() . '.' . $request->avatar->extension();  
+            $avatar = $request->avatar->move(public_path('uploads'), $imageName);
+            $page->image = basename($avatar);
         }
         $page->is_active = $request->is_active ? true : false;
         $page->meta_title = $request->meta_title;

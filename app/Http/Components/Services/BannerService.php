@@ -23,13 +23,18 @@ class BannerService
         $banner->title = $request->title;
         $banner->description = $request->description;
          if (!is_null($request->avatar)) {
-            $file = $request->avatar;
-            $imageName = time().'.'.$file->extension();
-            $file->move(public_path('images/banners'), $imageName);
+
+            $imageName = "image_" . time() . '_' . uniqid() . '.' . $request->avatar->extension();  
+            $avatar = $request->avatar->move(public_path('uploads'), $imageName);
+            $avatar = basename($avatar);
+            
+            // $file = $request->avatar;
+            // $imageName = time().'.'.$file->extension();
+            // $file->move(public_path('images/banners'), $imageName);
             // Get the base URL of your Laravel application
             $baseUrl = url('/'); 
             // Add the base URL to the image filename
-            $imageUrl = $baseUrl.'/images/banners/'.$imageName;
+            $imageUrl = $baseUrl.'/images/banners/'.$avatar;
             // Save the image URL to the database
             $banner->image  = $imageUrl;
         }

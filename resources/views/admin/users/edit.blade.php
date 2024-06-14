@@ -68,7 +68,7 @@
                                     <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
                                         data-kt-image-input="true">
                                         <!--begin::Preview existing avatar-->
-                                        <div class="image-input-wrapper w-150px h-150px" style="background-image:url('{{ get_site_image_src('uploads', !empty($user) ? $user->user_image : '') }}')"></div>
+                                        <div class="image-input-wrapper w-150px h-150px" style="background-image:url('{{ get_site_image_src('', !empty($user) ? $user->user_image : '') }}')"></div>
                                         <!--end::Preview existing avatar-->
                                         <!--begin::Label-->
                                         <label
@@ -136,7 +136,7 @@
                                     <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
                                         data-kt-image-input="true">
                                         <!--begin::Preview existing avatar-->
-                                        <div class="image-input-wrapper w-150px h-150px" style="background-image:url('{{ get_site_image_src('uploads', !empty($user) ? $user->user_cover : '') }}')"></div>
+                                        <div class="image-input-wrapper w-150px h-150px" style="background-image:url('{{ get_site_image_src('', !empty($user) ? $user->user_cover : '') }}')"></div>
                                         <!--end::Preview existing avatar-->
                                         <!--begin::Label-->
                                         <label

@@ -38,15 +38,18 @@ class CategoryService
         }
          // Upload Product IMG
         if (!is_null($request->avatar)) {
-            $imageName = time().'.'.$request->avatar->extension();
-            $request->avatar->move(public_path('images/categories'), $imageName);
+            // $imageName = time().'.'.$request->avatar->extension();
+            // $request->avatar->move(public_path('images/categories'), $imageName);
+            $imageName = "image_" . time() . '_' . uniqid() . '.' . $request->avatar->extension();  
+            $avatar = $request->avatar->move(public_path('uploads'), $imageName);
+            $avatar = basename($avatar);
             // Get the base URL of your Laravel application
-            $baseUrl = url('/');
+            // $baseUrl = url('/');
             // Add the base URL to the image filename
-            $imageUrl = $baseUrl.'/images/categories/'.$imageName;
+            // $imageUrl = $baseUrl.'/images/categories/'.$avatar;
             
             // Save the image URL to the database
-            $category->image = $imageUrl;
+            $category->image = $avatar;
             
         }
         $category->save();
@@ -72,15 +75,18 @@ class CategoryService
         }
         // Upload Product IMG
         if (!is_null($request->avatar)) {
-            $imageName = time().'.'.$request->avatar->extension();
-            $request->avatar->move(public_path('images/categories'), $imageName);
-             // Get the base URL of your Laravel application
-            $baseUrl = url('/');
-            // Add the base URL to the image filename
-            $imageUrl = $baseUrl.'/images/categories/'.$imageName;
+            // $imageName = time().'.'.$request->avatar->extension();
+            // $request->avatar->move(public_path('images/categories'), $imageName);
+            //  // Get the base URL of your Laravel application
+            // $baseUrl = url('/');
+            // // Add the base URL to the image filename
+            // $imageUrl = $baseUrl.'/images/categories/'.$imageName;
+            $imageName = "image_" . time() . '_' . uniqid() . '.' . $request->avatar->extension();  
+            $avatar = $request->avatar->move(public_path('uploads'), $imageName);
+            $avatar = basename($avatar);
             
             // Save the image URL to the database
-            $category->image = $imageUrl;
+            $category->image = $avatar;
             
         }
         $category->save();

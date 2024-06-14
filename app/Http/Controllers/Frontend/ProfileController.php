@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Tournament;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -78,13 +79,16 @@ class ProfileController extends Controller
                     $res['msg']='Error >>'.$validator->errors()->first();
                 }
                 else{
-                    $image=$request->file('image')->store('public/'.$type.'/');
+                    // $image=$request->file('image')->store('public/'.$type.'/');
+                    $imageName = "image_".time().'.'.$request->image->extension();  
+        
+                    $image=$request->image->move(public_path('uploads'), $imageName);
                     // print_r($image);die;
                     $res['image']=$image;
                     if(!empty(basename($image))){
                         $res['status']=1;
                         $res['image_name']=basename($image);
-                        // $res['image_path']=storage_path('app/public/'.basename($image));
+                        $res['image_path'] = Storage::url($image);
                     }
                     else{
                         $res['msg']="Something went wrong while uploading image. Please try again!";
@@ -117,7 +121,10 @@ class ProfileController extends Controller
                     $res['msg']='Error >>'.$validator->errors()->first();
                 }
                 else{
-                    $image=$request->file('image')->store('public/'.$type.'/');
+                    // $image=$request->file('image')->store('public/'.$type.'/');
+                    $imageName = "image_".time().'.'.$request->image->extension();  
+        
+                    $image=$request->image->move(public_path('uploads'), $imageName);
                     // print_r($image);die;
                     $res['image']=$image;
                     if(!empty(basename($image))){

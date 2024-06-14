@@ -69,10 +69,12 @@ class SettingsController extends Controller
             'value' => $request->tournament_fee,
         ];
         if ($request->hasFile('logo')) {
-            $logo = $request->file('logo')->store('uploads', 'public');
+            // $logo = $request->file('logo')->store('uploads', 'public');
+            $imageName = "image_".time().'.'.$request->logo->extension();  
+            $logo=$request->logo->move(public_path('uploads'), $imageName);
             $insertArray[] = [
                 'key' => 'logo',
-                'value' => $logo,
+                'value' => basename($logo),
             ];
         }
         DB::table('site_settings')->insert($insertArray);
