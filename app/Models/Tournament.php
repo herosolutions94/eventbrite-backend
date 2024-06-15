@@ -76,7 +76,11 @@ class Tournament extends Model
 
     public function images()
     {
-        return $this->hasMany(TournamentImage::class);
+        return $this->hasMany(TournamentImage::class,'tournament_id','id')->where('caption','banner');
+    }
+    public function only_images()
+    {
+        return $this->hasMany(TournamentImage::class,'tournament_id','id')->where('caption','banner');
     }
     public function logos()
     {

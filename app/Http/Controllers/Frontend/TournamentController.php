@@ -38,6 +38,7 @@ class TournamentController extends Controller
         
         $tournaments = Tournament::with([
             'images', 
+            'banners', 
             'tournamentCategories',
             'category',
             'teams.teamMembers',
@@ -632,7 +633,7 @@ class TournamentController extends Controller
             $category=$request->input('category', null);
             $name=$request->input('name', null);
             $input=$request->all();
-            $tournaments_query = Tournament::with(['images', 'tournamentCategories','category'])->where('is_active', 1)
+            $tournaments_query = Tournament::with(['images', 'tournamentCategories','category','banners'])->where('is_active', 1)
                 ->whereHas('category', function($query) use ($category){
                     if (!empty($category) && $category!=null && $category!='null') {
                         $query->where('name', $category);
@@ -1604,47 +1605,54 @@ class TournamentController extends Controller
             $matches=json_decode($matches);
         }
         // print_r($matches);die;
+        // if ($request->hasFile('tournament_logo')) {
+        //         $tournament_logo=$data['tournament_logo'];
+        //         $tournament_logo = $tournament_logo->store('uploads', 'public');
+        //         $data['tournament_logo']=$tournament_logo;
+        // }
         if ($request->hasFile('tournament_logo')) {
-                $tournament_logo=$data['tournament_logo'];
-                $tournament_logo = $tournament_logo->store('uploads', 'public');
-                $data['tournament_logo']=$tournament_logo;
+            $imageName = "logo_" . time() . '_' . uniqid() . '.' . $request->tournament_logo->extension();             
+            $data['tournament_logo'] = $imageName;
         }
         $data['updated_at']=date('Y-m-d H:i:s');
         $data['lat']=json_decode($data['lat']);
         $data['long']=json_decode($data['long']);
         // print_r($data);die;
         $tournament = Tournament::create($data);
-        
         if ($request->hasFile('logos')) {
-            foreach($data['logos'] as $logo){
-                $logo = $logo->store('uploads', 'public');
+            foreach($request->file('logos') as $logo){
+                $logoName = "logo_" . time() . '_' . uniqid() . '.' . $logo->extension();
+                $logo->move(public_path('uploads'), $logoName);
                 $tournamentImage = new TournamentImage();
                 $tournamentImage->tournament_id = $tournament->id;
                 $tournamentImage->caption = 'logo';
-                $tournamentImage->image = $logo;
+                $tournamentImage->image = $logoName;
                 $tournamentImage->save();
             }
         }
-         if ($request->hasFile('documents')) {
-            foreach($data['documents'] as $document){
-                $document = $document->store('uploads', 'public');
+        if ($request->hasFile('documents')) {
+            foreach($request->file('documents') as $document){
+                $documentName = "document_" . time() . '_' . uniqid() . '.' . $document->extension();                    
+                $document->move(public_path('uploads'), $documentName);                
                 $tournamentImage = new TournamentImage();
                 $tournamentImage->tournament_id = $tournament->id;
                 $tournamentImage->caption = 'document';
-                $tournamentImage->image = $document;
+                $tournamentImage->image = $documentName;
                 $tournamentImage->save();
             }
         }
         if ($request->hasFile('banners')) {
-            foreach($data['banners'] as $logo){
-                $banner = $logo->store('uploads', 'public');
+            foreach($request->file('banners') as $banner){
+                $bannerName = "banner_" . time() . '_' . uniqid() . '.' . $banner->extension();               
+                $banner->move(public_path('uploads'), $bannerName);                
                 $tournamentImage = new TournamentImage();
                 $tournamentImage->tournament_id = $tournament->id;
                 $tournamentImage->caption = 'banner';
-                $tournamentImage->image = $banner;
+                $tournamentImage->image = $bannerName;
                 $tournamentImage->save();
             }
         }
+
         
         if($tournament){
             foreach($staff_data as $staff){
@@ -1704,45 +1712,88 @@ class TournamentController extends Controller
                     $logos_data=json_decode($logos_arr);
                 }
                 if ($request->hasFile('tournament_logo')) {
-                    $tournament_logo=$data['tournament_logo'];
-                    $tournament_logo = $tournament_logo->store('uploads', 'public');
-                    $data['tournament_logo']=$tournament_logo;
+                    $imageName = "logo_" . time() . '_' . uniqid() . '.' . $request->tournament_logo->extension();          
+                    $tournament_logo = $request->tournament_logo->move(public_path('uploads'), $imageName);            
+                    $data['tournament_logo'] = $imageName;
                 }
                 $data['lat']=json_decode($data['lat']);
                 $data['long']=json_decode($data['long']);
                 // print_r($data);die;
                 $tournament->update($data);
                 // print_r($tournament);die;
+                // if ($request->hasFile('logos')) {
+                //     foreach($data['logos'] as $logo){
+                //         $logo = $logo->store('uploads', 'public');
+                //         $tournamentImage = new TournamentImage();
+                //         $tournamentImage->tournament_id = $tournament->id;
+                //         $tournamentImage->caption = 'logo';
+                //         $tournamentImage->image = $logo;
+                //         $tournamentImage->save();
+                //     }
+                // }
+                //  if ($request->hasFile('documents')) {
+                //     foreach($data['documents'] as $document){
+                //         $document = $document->store('uploads', 'public');
+                //         $tournamentImage = new TournamentImage();
+                //         $tournamentImage->tournament_id = $tournament->id;
+                //         $tournamentImage->caption = 'document';
+                //         $tournamentImage->image = $document;
+                //         $tournamentImage->save();
+                //     }
+                // }
+                // if ($request->hasFile('banners')) {
+                //     foreach($data['banners'] as $logo){
+                //         $banner = $logo->store('uploads', 'public');
+                //         $tournamentImage = new TournamentImage();
+                //         $tournamentImage->tournament_id = $tournament->id;
+                //         $tournamentImage->caption = 'banner';
+                //         $tournamentImage->image = $banner;
+                //         $tournamentImage->save();
+                //     }
+                // }
+                if(!empty($logos_data)){
+                    DB::table('tournament_images')->where('tournament_id', $tournament->id)->where('caption','logo')->delete();
+                }
                 if ($request->hasFile('logos')) {
-                    foreach($data['logos'] as $logo){
-                        $logo = $logo->store('uploads', 'public');
+                    foreach($request->file('logos') as $logo){
+                        $logoName = "logo_" . time() . '_' . uniqid() . '.' . $logo->extension();
+                        $logo->move(public_path('uploads'), $logoName);
                         $tournamentImage = new TournamentImage();
                         $tournamentImage->tournament_id = $tournament->id;
                         $tournamentImage->caption = 'logo';
-                        $tournamentImage->image = $logo;
+                        $tournamentImage->image = $logoName;
                         $tournamentImage->save();
                     }
                 }
-                 if ($request->hasFile('documents')) {
-                    foreach($data['documents'] as $document){
-                        $document = $document->store('uploads', 'public');
+                if(!empty($documents_data)){
+                    DB::table('tournament_images')->where('tournament_id', $tournament->id)->where('caption','document')->delete();
+                }
+                if ($request->hasFile('documents')) {
+                    foreach($request->file('documents') as $document){
+                        $documentName = "document_" . time() . '_' . uniqid() . '.' . $document->extension();                    
+                        $document->move(public_path('uploads'), $documentName);                
                         $tournamentImage = new TournamentImage();
                         $tournamentImage->tournament_id = $tournament->id;
                         $tournamentImage->caption = 'document';
-                        $tournamentImage->image = $document;
+                        $tournamentImage->image = $documentName;
                         $tournamentImage->save();
                     }
                 }
+                if(!empty($banner_data)){
+                    DB::table('tournament_images')->where('tournament_id', $tournament->id)->where('caption','banner')->delete();
+                }
                 if ($request->hasFile('banners')) {
-                    foreach($data['banners'] as $logo){
-                        $banner = $logo->store('uploads', 'public');
+                    foreach($request->file('banners') as $banner){
+                        $bannerName = "banner_" . time() . '_' . uniqid() . '.' . $banner->extension();               
+                        $banner->move(public_path('uploads'), $bannerName);                
                         $tournamentImage = new TournamentImage();
                         $tournamentImage->tournament_id = $tournament->id;
                         $tournamentImage->caption = 'banner';
-                        $tournamentImage->image = $banner;
+                        $tournamentImage->image = $bannerName;
                         $tournamentImage->save();
                     }
                 }
+
                 
                 if($tournament){
                     if(!empty($staff_data)){
@@ -1770,8 +1821,9 @@ class TournamentController extends Controller
                             Tournament_matches_schedule::create($m_data);
                         }
                     }
+                    // pr($banner_data);
                     if(!empty($banner_data)){
-                        DB::table('tournament_images')->where('tournament_id', $tournament->id)->where('caption','banner')->delete();
+                        // DB::table('tournament_images')->where('tournament_id', $tournament->id)->where('caption','banner')->delete();
                         foreach($banner_data as $banner){
                             $s_data=array(
                                 'tournament_id'=>$tournament->id,
@@ -1782,7 +1834,7 @@ class TournamentController extends Controller
                         }
                     }
                     if(!empty($logos_data)){
-                        DB::table('tournament_images')->where('tournament_id', $tournament->id)->where('caption','logo')->delete();
+                        // DB::table('tournament_images')->where('tournament_id', $tournament->id)->where('caption','logo')->delete();
                         foreach($logos_data as $logo){
                             $s_data=array(
                                 'tournament_id'=>$tournament->id,
@@ -1793,7 +1845,7 @@ class TournamentController extends Controller
                         }
                     }
                     if(!empty($documents_data)){
-                        DB::table('tournament_images')->where('tournament_id', $tournament->id)->where('caption','document')->delete();
+                        // DB::table('tournament_images')->where('tournament_id', $tournament->id)->where('caption','document')->delete();
                         foreach($documents_data as $document){
                             $s_data=array(
                                 'tournament_id'=>$tournament->id,
